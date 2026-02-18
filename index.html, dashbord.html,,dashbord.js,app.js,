@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Women Safety SOS</title>
+
+  
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #ff416c, #ff4b2b);
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 40px;
+      width: 90%;
+      max-width: 420px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    }
+
+    h1 {
+      font-size: 26px;
+      margin-bottom: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    p {
+      font-size: 14px;
+      margin-bottom: 30px;
+      opacity: 0.9;
+    }
+
+    .sos-btn {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      border: none;
+      background: radial-gradient(circle, #ff0000, #b30000);
+      color: white;
+      font-size: 22px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 25px rgba(255,0,0,0.7);
+      transition: all 0.2s ease;
+      animation: pulse 1.6s infinite;
+    }
+
+    .sos-btn:active {
+      transform: scale(0.95);
+      box-shadow: 0 0 10px rgba(255,0,0,0.5);
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(255,0,0,0.7); }
+      70% { box-shadow: 0 0 0 25px rgba(255,0,0,0); }
+      100% { box-shadow: 0 0 0 0 rgba(255,0,0,0); }
+    }
+
+    .status {
+      margin-top: 20px;
+      font-size: 14px;
+      opacity: 0.85;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <h1>🚨 Women Safety SOS</h1>
+    <p>Press the button in emergency. Location will be sent instantly to police,and gurdian also</p>
+
+    <button id="sosBtn" class="sos-btn">SOS</button>
+    
+
+<audio id="siren">
+  <source src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg" type="audio/ogg">
+</audio>
+
+
+    <div class="status" id="statusText">
+      System ready. Stay safe.
+    </div>
+  </div>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+  
+  <script src="app.js"></script>
+
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PCR Emergency Dashboard</title>
+
+  
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+   
+    
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  body {
+    background: #0f172a;
+    color: #fff;
+     
+  }
+
+  .header {
+    background: linear-gradient(90deg, #ff0000, #b30000);
+    padding: 18px 30px;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+
+  .container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    min-height: 100vh;
+  }
+
+  .map-card {
+    background: #1e293b;
+    padding: 15px;
+  }
+
+  #map {
+    height: 600px;
+    width: 100%;
+    border-radius: 12px;
+  }
+
+  .alert-panel {
+    background: #020617;
+    padding: 20px;
+    height: 100vh;
+    position: sticky;
+    top: 70px;
+    overflow-y: auto;
+  }
+
+  .alert-panel h2 {
+    font-size: 18px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #334155;
+    padding-bottom: 10px;
+  }
+
+  .alert-card {
+    background: #111827;
+    border-left: 5px solid red;
+    padding: 15px;
+    margin-bottom: 12px;
+    border-radius: 10px;
+    transition: 0.2s;
+  }
+
+  .alert-card:hover {
+    transform: scale(1.02);
+  }
+
+  .alert-card h3 {
+    color: #ff4d4d;
+    margin-bottom: 6px;
+    font-size: 15px;
+  }
+
+  .alert-card p {
+    font-size: 13px;
+    opacity: 0.9;
+    margin: 3px 0;
+  }
+
+  @media(max-width: 900px){
+    .container {
+      grid-template-columns: 1fr;
+    }
+
+    #map {
+      height: 350px;
+    }
+
+    .alert-panel {
+      position: relative;
+      height: auto;
+    }
+  }
+
+
+  </style>
+</head>
+
+<body>
+
+  
+  <div class="header">
+    🚨 Police PCR Emergency Monitoring Dashboard
+  </div>
+
+  <div class="container">
+
+    
+    <div class="map-card">
+      <div id="map"></div>
+    </div>
+
+    
+    <div class="alert-panel">
+      <h2>Live SOS Alerts</h2>
+      <div id="alerts"></div>
+    </div>
+
+  </div>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+  
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAt-3HvlWY8Nnc7EykyE-w97NwFiHvpasM"></script>
+
+  
+  <script src="dashboard.js"></script>
+
+</body>
+</html>
+
+
+
+const supabaseUrl = "https://nianoafaavkiiviffbbt.supabase.co";
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5pYW5vYWZhYXZraWl2aWZmYmJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA1MzMzOTksImV4cCI6MjA4NjEwOTM5OX0.2Jdmy5kk1-Kx2-AJZMJwfOPLuHU0XsjAaZXL6ODR9mk";
+
+const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+let map;
+
+function initMap() {
+  map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 5,
+    center: { lat: 20.5937, lng: 78.9629 } // India center
+  });
+}
+
+function showAlerts(data) {
+  let output = "";
+
+  data.forEach(alert => {
+
+    // Add marker
+    new google.maps.Marker({
+      position: { lat: parseFloat(alert.latitude), lng: parseFloat(alert.longitude) },
+      map: map,
+      title: "SOS Alert"
+    });
+
+   output += `
+  <div style="border:2px solid red; margin:10px; padding:10px;">
+    <h3>🚨 LIVE SOS ALERT</h3>
+    <p>Latitude: ${alert.latitude}</p>
+    <p>Longitude: ${alert.longitude}</p>
+    <p>Time: ${new Date(alert.created_at).toLocaleString("en-IN", {
+      timeZone: "Asia/Kolkata"
+    })}</p>
+  </div>
+`;
+  });
+
+  document.getElementById("alerts").innerHTML = output;
+}
+
+// Load existing alerts
+async function loadAlerts() {
+  const { data, error } = await supabaseClient
+    .from('alerts')
+    .select('*');
+
+  showAlerts(data);
+}
+
+// REALTIME updates
+supabaseClient
+  .channel('alerts-channel')
+  .on(
+    'postgres_changes',
+    { event: 'INSERT', schema: 'public', table: 'alerts' },
+    payload => {
+      loadAlerts();
+    }
+  )
+  .subscribe();
+
+initMap();
+loadAlerts();   
+
+
+window.onload = function () {
+
+  
+  if (!window.supabase) {
+    alert("Supabase not loaded");
+    return;
+  }
+
+  const supabaseUrl = "https://nianoafaavkiiviffbbt.supabase.co";
+  const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5pYW5vYWZhYXZraWl2aWZmYmJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA1MzMzOTksImV4cCI6MjA4NjEwOTM5OX0.2Jdmy5kk1-Kx2-AJZMJwfOPLuHU0XsjAaZXL6ODR9mk";
+
+  const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+  
+  emailjs.init("4Ve-rgKVSpX9aopUq");
+
+  const sosBtn = document.getElementById("sosBtn");
+
+  if (!sosBtn) {
+    alert("SOS button not found in HTML");
+    return;
+  }
+
+  sosBtn.addEventListener("click", function () {
+    const siren = document.getElementById("siren");
+siren.currentTime = 0;
+siren.play().catch(err => console.log("Sound blocked:", err));
+
+
+    alert("SOS button pressed");
+
+    if (!navigator.geolocation) {
+      alert("Location not supported");
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(async function (pos) {
+
+      const lat = pos.coords.latitude;
+      const lng = pos.coords.longitude;
+      const mapLink = `https://www.google.com/maps?q=${lat},${lng}`;
+
+    
+  if (!navigator.onLine) {
+
+    const message = `SOS! I am in danger.
+Location: https://maps.google.com/?q=${lat},${lng}`;
+
+    window.location.href =
+      `sms:6372886380?body=${encodeURIComponent(message)}`;
+
+    return; 
+  }
+
+
+    
+      const { error } = await supabase.from("alerts").insert([
+        {
+          latitude: lat,
+          longitude: lng,
+          status: "SOS TRIGGERED",
+          created_at: new Date().toISOString()
+        }
+      ]);
+
+      if (error) {
+        alert("Database error");
+        console.log(error);
+        return;
+      }
+
+      
+      emailjs.send("service_uqhlqtv", "template_2xyptyf", {
+        latitude: lat,
+        longitude: lng,
+        location: mapLink,
+        time: new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })
+      });
+      
+
+
+
+
+
+      alert("SOS SENT SUCCESSFULLY");
+
+    }, function () {
+      alert("Location permission denied");
+    });
+    
+
+
+
+  });
+
+};
+
