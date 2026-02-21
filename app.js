@@ -47,7 +47,7 @@ siren.play().catch(err => console.log("Sound blocked:", err));
 Location: https://maps.google.com/?q=${lat},${lng}`;
 
     window.location.href =
-      `sms:6372886380,7205006066,9827989049,7004701737?body=${encodeURIComponent(message)}`;
+      `sms:6372886380,7205006066,9556562197,7004701737?body=${encodeURIComponent(message)}`;
 
     return; 
   }
