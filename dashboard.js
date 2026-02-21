@@ -9,7 +9,7 @@ let map;
 function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
     zoom: 5,
-    center: { lat: 20.5937, lng: 78.9629 } // India center
+    center: { lat: 20.5937, lng: 78.9629 } 
   });
 }
 
@@ -18,7 +18,7 @@ function showAlerts(data) {
 
   data.forEach(alert => {
 
-    // Add marker
+    
     new google.maps.Marker({
       position: { lat: parseFloat(alert.latitude), lng: parseFloat(alert.longitude) },
       map: map,
@@ -40,7 +40,7 @@ function showAlerts(data) {
   document.getElementById("alerts").innerHTML = output;
 }
 
-// Load existing alerts
+
 async function loadAlerts() {
   const { data, error } = await supabaseClient
     .from('alerts')
@@ -49,7 +49,7 @@ async function loadAlerts() {
   showAlerts(data);
 }
 
-// REALTIME updates
+
 supabaseClient
   .channel('alerts-channel')
   .on(
